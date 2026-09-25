@@ -31,7 +31,7 @@ OUTPUT_SELECTION_COLOR = "#3c4043"
 class CommandParser:
     """Разбирать команды и раскрывать переменные окружения ОС."""
 
-    VARIABLE = re.compile(
+    reg = re.compile(
         r"\$(?:"
         r"\{(?P<braced>[A-Za-z_][A-Za-z0-9_]*)\}|"
         r"(?P<plain>[A-Za-z_][A-Za-z0-9_]*)"
@@ -49,7 +49,7 @@ class CommandParser:
                 value = os.environ.get("USERPROFILE")
             return "" if value is None else value
 
-        return cls.VARIABLE.sub(replace, text)
+        return cls.reg.sub(replace, text)
 
     @classmethod
     def parse(cls, text: str) -> list[str]:
