@@ -11,6 +11,7 @@ from tkinter import ttk
 from .commands import CommandProcessor, CommandResult
 from .config import AppConfig, parse_arguments
 from .startup import SCRIPT_ERROR_MESSAGE, ScriptEvent, StartupScriptRunner
+from .vfs import VfsError, VirtualFileSystem
 
 
 VFS_TITLE_FALLBACK = "vfs_stage1"
@@ -26,16 +27,24 @@ ENTRY_IPADY = 7
 class ShellWindow:
     """Показывать диалог эмулятора в графическом окне."""
 
-    def __init__(self, root: tk.Tk, config: AppConfig) -> None:
+    def __init__(
+        self,
+        root: tk.Tk,
+        config: AppConfig,
+        vfs: VirtualFileSystem,
+        load_error: str | None = None,
+    ) -> None:
         """Создать окно с заданной конфигурацией запуска."""
 
         self.root = root
         self.config = config
-        self.processor = CommandProcessor()
+        self.vfs = vfs
+        self.load_error = load_error
+        self.processor = CommandProcessor(vfs)
         self.history: list[str] = []
         self.history_index: int | None = None
         self.running = True
-        self.vfs_name = self._vfs_name(config.vfs_path)
+        self.vfs_name = vfs.name or VFS_TITLE_FALLBACK
 
         self._configure_window()
         self._configure_style()
@@ -50,12 +59,6 @@ class ShellWindow:
         self.root.minsize(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT)
         self.root.configure(bg="#202124")
         self.root.protocol("WM_DELETE_WINDOW", self.close)
-
-    @staticmethod
-    def _vfs_name(path: Path) -> str:
-        """Получить имя VFS из пути или вернуть имя прототипа."""
-
-        return path.stem or path.name or VFS_TITLE_FALLBACK
 
     @staticmethod
     def _configure_style() -> None:
@@ -146,6 +149,10 @@ class ShellWindow:
 
         for line in self.config.debug_lines():
             self._append(line + "\n", "info")
+        if self.load_error:
+            self._append(self.load_error + "\n", "error")
+        else:
+            self._append(f"VFS загружена в память: {self.vfs.name}\n", "info")
         self._append("Команды: ls, cd, exit\n\n", "info")
         self._show_prompt()
 
@@ -282,5 +289,16 @@ def run_application(arguments: list[str] | None = None) -> None:
     """Разобрать конфигурацию и запустить графическое приложение."""
 
     config = parse_arguments(arguments)
+    vfs, load_error = _load_vfs(config.vfs_path)
     root = tk.Tk()
-    ShellWindow(root, config).run()
+    ShellWindow(root, config, vfs, load_error).run()
+
+
+def _load_vfs(path: Path) -> tuple[VirtualFileSystem, str | None]:
+    """Загрузить VFS или вернуть пустую VFS с сообщением об ошибке."""
+
+    try:
+        return VirtualFileSystem.from_xml(path), None
+    except VfsError as error:
+        name = path.stem or VFS_TITLE_FALLBACK
+        return VirtualFileSystem.empty(name), str(error)

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vfs name="several-files">
+  <directory name="home">
+    <file name="readme.txt">The file is stored in memory.
+</file>
+    <file name="notes.txt">Stage 3 supports XML VFS files.
+</file>
+  </directory>
+  <directory name="bin">
+    <file name="sample.bin" encoding="base64">AAECAwQFBgcICQ==</file>
+  </directory>
+  <file name="version.txt">stage-3
+</file>
+</vfs>

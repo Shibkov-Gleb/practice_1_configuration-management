@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vfs name="nested-three-levels">
+  <directory name="home">
+    <directory name="student">
+      <directory name="projects">
+        <directory name="shell">
+          <file name="README.txt">A file below three directory levels.
+</file>
+        </directory>
+      </directory>
+    </directory>
+  </directory>
+</vfs>

@@ -1,0 +1,10 @@
+# Стартовый сценарий этапа 3: VFS, команды этапа 2 и ошибки.
+ls
+cd home
+ls
+cd ..
+unknown
+cd /home
+ls -la
+cd /does-not-exist
+exit
