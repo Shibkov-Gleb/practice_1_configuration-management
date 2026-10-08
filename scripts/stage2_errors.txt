@@ -1,0 +1,5 @@
+# Ошибочные строки пропускаются, выполнение продолжается.
+unknown
+"unclosed
+cd $USERPROFILE
+ls -la

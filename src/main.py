@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 import getpass
+
 import os
 import re
 import shlex
 import socket
+import sys
 import tkinter as tk
 from collections.abc import Callable
+from pathlib import Path
 from tkinter import ttk
 from typing import Optional
 
@@ -352,10 +355,15 @@ class ShellEmulator:
 
 
 def main() -> None:
-    """Создать окно приложения и запустить эмулятор."""
+    """Запустить приложение с параметрами командной строки."""
 
-    root = tk.Tk()
-    ShellEmulator(root).run()
+    if __package__:
+        from .application import run_application
+    else:
+        sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+        from src.application import run_application
+
+    run_application()
 
 
 if __name__ == "__main__":

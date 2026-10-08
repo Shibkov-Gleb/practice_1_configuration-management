@@ -2,4 +2,5 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-exec python3 "${PROJECT_DIR}/src/main.py"
+cd "${PROJECT_DIR}"
+exec python3 -m src.main
