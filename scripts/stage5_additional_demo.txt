@@ -1,0 +1,31 @@
+# Полный сценарий этапа 5: rm, chmod, базовые команды и ошибки.
+ls
+ls -l
+ls -a
+ls -h
+ls -lha
+ls -hal
+ls -lh
+ls -l -h -a /home
+ls -la /home
+cd home/./..
+cd ./home/../home
+ls -hal ../home/.
+cd ..
+cd home
+ls
+cd ..
+chmod 600 /home/notes.txt
+ls -l /home/notes.txt
+chmod 999 /home/notes.txt
+chmod 600
+rm /home/notes.txt
+rm /home
+rm -r /home
+rm -R /bin
+ls
+rm -r /
+rm
+clear
+uptime
+exit

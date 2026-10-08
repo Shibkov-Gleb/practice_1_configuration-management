@@ -153,7 +153,8 @@ class ShellWindow:
             self._append(self.load_error + "\n", "error")
         else:
             self._append(f"VFS загружена в память: {self.vfs.name}\n", "info")
-        self._append("Команды: ls, cd, clear, uptime, exit\n\n", "info")
+        commands = "Команды: ls, cd, clear, uptime, rm, chmod, exit\n\n"
+        self._append(commands, "info")
         self._show_prompt()
 
     def _append(self, text: str, tag: str = "result") -> None:

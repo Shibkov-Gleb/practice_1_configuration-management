@@ -164,12 +164,16 @@ class VirtualFileSystem:
         current = self.root if absolute_path else (start or self.current)
         parts = path.replace("~", "", 1).split("/")
         for part in parts:
-            if not part or part == ".":
+            if not part:
+                continue
+            if not current.is_directory:
+                raise VfsError(f"Не является каталогом: {current.path}")
+            if part == ".":
                 continue
             if part == "..":
                 current = current.parent or self.root
                 continue
-            if not current.is_directory or part not in current.children:
+            if part not in current.children:
                 raise VfsError(f"Путь не найден: {path}")
             current = current.children[part]
         return current

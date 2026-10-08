@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import getpass
-
 import os
 import re
 import shlex
@@ -31,10 +30,11 @@ OUTPUT_FOREGROUND = "#e8eaed"
 OUTPUT_INSERT_COLOR = "#e8eaed"
 OUTPUT_SELECTION_COLOR = "#3c4043"
 
+
 class CommandParser:
     """Разбирать команды и раскрывать переменные окружения ОС."""
 
-    reg = re.compile(
+    _VARIABLE = re.compile(
         r"\$(?:"
         r"\{(?P<braced>[A-Za-z_][A-Za-z0-9_]*)\}|"
         r"(?P<plain>[A-Za-z_][A-Za-z0-9_]*)"
@@ -52,7 +52,7 @@ class CommandParser:
                 value = os.environ.get("USERPROFILE")
             return "" if value is None else value
 
-        return cls.reg.sub(replace, text)
+        return cls._VARIABLE.sub(replace, text)
 
     @classmethod
     def parse(cls, text: str) -> list[str]:

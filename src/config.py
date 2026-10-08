@@ -33,18 +33,18 @@ def parse_arguments(arguments: Sequence[str] | None = None) -> AppConfig:
     """Разобрать параметры ``--vfs`` и ``--script``."""
 
     parser = argparse.ArgumentParser(
-        description="Графический эмулятор оболочки ОС",
+        description="GUI operating system shell emulator",
     )
     parser.add_argument(
         "--vfs",
         type=Path,
         default=DEFAULT_VFS_PATH,
-        help="путь к XML-файлу виртуальной файловой системы",
+        help="path to the virtual file system XML file",
     )
     parser.add_argument(
         "--script",
         type=Path,
-        help="путь к стартовому скрипту команд эмулятора",
+        help="path to the emulator startup command script",
     )
     namespace = parser.parse_args(arguments)
     return AppConfig(namespace.vfs, namespace.script)

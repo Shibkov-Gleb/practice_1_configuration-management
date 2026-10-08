@@ -31,7 +31,7 @@ class BasicCommandTests(unittest.TestCase):
     def test_ls_long_format_lists_file_metadata(self) -> None:
         """Флаг -l выводит тип, права, размер и имя узла."""
 
-        result = self.processor.execute("ls -la /home")
+        result = self.processor.execute("ls -l /home")
 
         self.assertRegex(result.lines[0], r"^-rw-r--r-- +\d+ welcome\.txt$")
 
