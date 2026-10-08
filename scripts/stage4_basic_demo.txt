@@ -1,0 +1,16 @@
+# Полный сценарий этапа 4: команды, флаги и ошибки VFS.
+ls
+ls -l
+ls -la /home
+ls -a /home
+ls /does-not-exist
+cd home
+ls
+cd
+cd ..
+cd /does-not-exist
+clear
+clear now
+uptime
+uptime now
+exit
