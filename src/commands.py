@@ -8,6 +8,8 @@ import shlex
 import time
 from dataclasses import dataclass
 
+from .vfs import VirtualFileSystem
+
 
 @dataclass(frozen=True)
 class CommandResult:
@@ -57,11 +59,12 @@ class CommandParser:
 
 
 class CommandProcessor:
-    """Выполнять команды-заглушки этапа 2."""
+    """Выполнять команды эмулятора и хранить подключенную VFS."""
 
-    def __init__(self) -> None:
+    def __init__(self, vfs: VirtualFileSystem | None = None) -> None:
         """Создать обработчик команд и запомнить момент запуска."""
 
+        self.vfs = vfs
         self.started_at = time.monotonic()
 
     def execute(self, text: str) -> CommandResult:
