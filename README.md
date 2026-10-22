@@ -26,6 +26,12 @@ run.bat
 python -m src.main
 ```
 
+Также можно запустить `src/main.py` напрямую из IDE или командой:
+
+```text
+python src/main.py
+```
+
 Linux/macOS:
 
 ```text
@@ -224,5 +230,5 @@ python -m unittest discover -s tests -v
     `-- test_stage5.py
 ```
 
-Коммиты оформляются в формате Conventional Commits, например:
-`feat(repl): add environment variable expansion`.
+Коммиты оформляются в формате Conventional/Scoped Commits, например:
+`feat(config): complete stage 2 configuration`.
